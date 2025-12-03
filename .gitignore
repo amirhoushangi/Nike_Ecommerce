@@ -48,3 +48,10 @@ app.*.map.json
 /windows/
 /linux/
 /macos/
+
+# Ignore platform-specific folders (to exclude C++ files)
+/android/
+/ios/
+/windows/
+/linux/
+/macos/
