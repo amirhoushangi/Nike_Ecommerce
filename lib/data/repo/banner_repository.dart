@@ -2,14 +2,16 @@ import 'package:nike_ecommerce_flutter/common/http_Client.dart';
 import 'package:nike_ecommerce_flutter/data/banner.dart';
 import 'package:nike_ecommerce_flutter/data/source/banner_data_source.dart';
 
-final bannerRepository = BannerRepository(BannerRemoteDataSource(httpClient),);
+final bannerRepository = BannerRepository(
+  BannerRemoteDataSource(httpClient),
+);
 
 abstract class IBannerRepository {
   Future<List<BannerEntity>> getAll();
 }
 
 class BannerRepository implements IBannerRepository {
-  final IBannerRepository dataSource;
+  final IBannerDataSource dataSource;
 
   BannerRepository(this.dataSource);
 

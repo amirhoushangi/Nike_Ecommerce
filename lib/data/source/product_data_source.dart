@@ -25,10 +25,10 @@ class ProductRemotDataSource
         query = '?_sort=discount&_order=desc';
         break;
       case ProductSort.priceHighToLow:
-        query = '?_sort=price&_order=desc';
+        query = '?_sort=price&_order=asc';
         break;
       case ProductSort.priceLowToHigh:
-        query = '?_sort=price&_order=asc';
+        query = '?_sort=price&_order=desc';
         break;
     }
 
@@ -43,7 +43,7 @@ class ProductRemotDataSource
 
   @override
   Future<List<ProductEntity>> search(String searchTerm) async {
-    final response = await httpClient.get('/products');
+    final response = await httpClient.get('/products?title_like=$searchTerm');
     validateResponse(response);
     final product = <ProductEntity>[];
     (response.data as List).forEach((element) {
