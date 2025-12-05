@@ -32,6 +32,8 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         useMaterial3: true,
         textTheme: TextTheme(
+            titleSmall: defultTextStyle.apply(
+                color: LightThemeColors.secondryTextColor),
             bodyMedium: defultTextStyle,
             bodySmall: defultTextStyle.apply(
                 color: LightThemeColors.secondryTextColor),
@@ -43,6 +45,15 @@ class MyApp extends StatelessWidget {
         appBarTheme: const AppBarTheme(
           backgroundColor: LightThemeColors.primaryColor,
           foregroundColor: Colors.white,
+        ),
+        textButtonTheme: TextButtonThemeData(
+          style: ButtonStyle(
+            foregroundColor:
+                WidgetStateProperty.all(LightThemeColors.primaryColor),
+            textStyle: WidgetStateProperty.all(
+              defultTextStyle.copyWith(fontSize: 14),
+            ),
+          ),
         ),
       ),
       home: const Directionality(
