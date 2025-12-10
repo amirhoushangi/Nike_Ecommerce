@@ -1,8 +1,8 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nike_ecommerce_flutter/UI/home/bloc/home_bloc.dart';
-import 'package:nike_ecommerce_flutter/UI/widgets/image.dart';
+import 'package:nike_ecommerce_flutter/UI/product/product.dart';
+import 'package:nike_ecommerce_flutter/UI/widgets/error.dart';
 import 'package:nike_ecommerce_flutter/UI/widgets/slider.dart';
 import 'package:nike_ecommerce_flutter/common/utils.dart';
 import 'package:nike_ecommerce_flutter/data/product.dart';
@@ -27,6 +27,7 @@ class HomeScreen extends StatelessWidget {
           child: BlocBuilder<HomeBloc, HomeState>(builder: ((context, state) {
             if (state is HomeSuccess) {
               return ListView.builder(
+                  physics: defaultScrollPhysics,
                   itemCount: 5,
                   itemBuilder: (context, index) {
                     switch (index) {
@@ -62,19 +63,11 @@ class HomeScreen extends StatelessWidget {
             } else if (state is HomeLoading) {
               return const Center(child: CircularProgressIndicator());
             } else if (state is HomeError) {
-              return Center(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Text(state.exception.message),
-                    ElevatedButton(
-                        onPressed: () {
-                          BlocProvider.of<HomeBloc>(context).add(HomeRefresh());
-                        },
-                        child: const Text('تلاش دوباره')),
-                  ],
-                ),
+              return AppErrorWidget(
+                exception: state.exception,
+                onPressed: () {
+                  BlocProvider.of<HomeBloc>(context).add(HomeRefresh());
+                },
               );
             } else {
               throw Exception('state is not supported');
@@ -123,68 +116,10 @@ class _HorizontalProductList extends StatelessWidget {
               padding: const EdgeInsets.only(left: 8, right: 8),
               itemBuilder: ((context, index) {
                 final product = products[index];
-                return Padding(
-                    padding: const EdgeInsets.all(4),
-                    child: SizedBox(
-                      width: 176,
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Stack(
-                            children: [
-                              SizedBox(
-                                width: 176,
-                                height: 189,
-                                child: ImageLoadingService(
-                                    imageUrl: product.imageUrl,
-                                    borderRadius: BorderRadius.circular(12)),
-                              ),
-                              Positioned(
-                                right: 8,
-                                top: 8,
-                                child: Container(
-                                  width: 32,
-                                  height: 32,
-                                  alignment: Alignment.center,
-                                  decoration: BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: Colors.grey.shade100,
-                                  ),
-                                  child: const Icon(
-                                    CupertinoIcons.heart,
-                                    size: 20,
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(
-                              product.title,
-                              maxLines: 1,
-                              overflow: TextOverflow.ellipsis,
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(right: 8, left: 8),
-                            child: Text(
-                              product.previousPrice.withPriceLable,
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodySmall!
-                                  .copyWith(
-                                      decoration: TextDecoration.lineThrough),
-                            ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.only(
-                                right: 8, left: 8, top: 4),
-                            child: Text(product.price.withPriceLable),
-                          ),
-                        ],
-                      ),
-                    ));
+                return ProductItem(
+                  product: product,
+                  borderRadius: BorderRadius.circular(12),
+                );
               })),
         )
       ],
