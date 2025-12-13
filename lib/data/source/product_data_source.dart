@@ -32,7 +32,7 @@ class ProductRemotDataSource
         break;
     }
 
-    final response = await httpClient.get('/products$query');
+    final response = await httpClient.get('/api/products$query');
     validateResponse(response);
     final product = <ProductEntity>[];
     (response.data as List).forEach((element) {
@@ -43,7 +43,7 @@ class ProductRemotDataSource
 
   @override
   Future<List<ProductEntity>> search(String searchTerm) async {
-    final response = await httpClient.get('/products?title_like=$searchTerm');
+    final response = await httpClient.get('/api/products?title_like=$searchTerm');
     validateResponse(response);
     final product = <ProductEntity>[];
     (response.data as List).forEach((element) {

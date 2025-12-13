@@ -15,7 +15,7 @@ class CommentRemoteDataSource
 
   @override
   Future<List<CommentEntitiy>> getAll({required int productId}) async {
-    final response = await httpClient.get('/comments?id=$productId');
+    final response = await httpClient.get('/api/comments?id=$productId');
     validateResponse(response);
     final List<CommentEntitiy> comments = [];
     (response.data as List).forEach((element) {

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:nike_ecommerce_flutter/data/repo/auth_repository.dart';
 import 'package:nike_ecommerce_flutter/theme.dart';
 
 class AuthScreen extends StatefulWidget {
@@ -27,6 +28,11 @@ class _AuthScreenState extends State<AuthScreen> {
           colorScheme: themeData.colorScheme.copyWith(outline: onBackground),
           inputDecorationTheme: InputDecorationTheme(
               labelStyle: const TextStyle(color: onBackground),
+              focusedBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                    color: LightThemeColors.primaryColor, width: 1.5),
+                borderRadius: BorderRadius.circular(12),
+              ),
               border: OutlineInputBorder(
                   borderRadius: BorderRadius.circular(12),
                   borderSide: const BorderSide(color: Colors.white)))),
@@ -69,7 +75,10 @@ class _AuthScreenState extends State<AuthScreen> {
               const _PasswordTextField(onBackground: onBackground),
               const SizedBox(height: 16),
               ElevatedButton(
-                onPressed: () {},
+                onPressed: () async {
+                  //await authRepository.login("amirh82@gmail.com", "13822831");
+                  authRepository.refreshToken();
+                },
                 child: Text(isLogin ? 'ورود' : 'ثبت نام'),
               ),
               const SizedBox(height: 24),

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:nike_ecommerce_flutter/UI/auth/auth.dart';
-import 'package:nike_ecommerce_flutter/UI/home/home.dart';
 import 'package:nike_ecommerce_flutter/UI/root.dart';
 import 'package:nike_ecommerce_flutter/data/repo/banner_repository.dart';
 import 'package:nike_ecommerce_flutter/data/repo/product_repository.dart';

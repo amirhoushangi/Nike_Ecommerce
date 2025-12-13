@@ -15,7 +15,7 @@ class BannerRemoteDataSource
 
   @override
   Future<List<BannerEntity>> getAll() async {
-    final response = await httpClient.get('/banner');
+    final response = await httpClient.get('/api/banner');
     validateResponse(response);
     final List<BannerEntity> banners = [];
     (response.data as List).forEach((jsonObject) {
