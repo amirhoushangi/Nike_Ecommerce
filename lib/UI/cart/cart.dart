@@ -2,9 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:nike_ecommerce_flutter/UI/auth/auth.dart';
 import 'package:nike_ecommerce_flutter/data/auth_info.dart';
 import 'package:nike_ecommerce_flutter/data/repo/auth_repository.dart';
+import 'package:nike_ecommerce_flutter/data/repo/cart_repository.dart';
 
-class CartScreen extends StatelessWidget {
+class CartScreen extends StatefulWidget {
   const CartScreen({super.key});
+
+  @override
+  State<CartScreen> createState() => _CartScreenState();
+}
+
+class _CartScreenState extends State<CartScreen> {
+  @override
+  void initState() {
+    cartRepository.getAll().then((value) {
+      debugPrint(value.toString());
+    }).catchError((e) {
+      debugPrint(e.toString());
+    });
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
