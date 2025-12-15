@@ -23,13 +23,9 @@ class AuthRepository implements IAuthRepository {
   );
   @override
   Future<void> login(String username, String password) async {
-    try {
-      final AuthInfo authInfo = await dataSource.login(username, password);
-      _persistAuthTokens(authInfo);
-      debugPrint("access token is: " + authInfo.accessToken);
-    } catch (e) {
-      debugPrint(e.toString());
-    }
+    final AuthInfo authInfo = await dataSource.login(username, password);
+    _persistAuthTokens(authInfo);
+    debugPrint("access token is: " + authInfo.accessToken);
   }
 
   @override

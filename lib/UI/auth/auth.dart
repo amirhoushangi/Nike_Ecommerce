@@ -13,9 +13,9 @@ class AuthScreen extends StatefulWidget {
 
 class _AuthScreenState extends State<AuthScreen> {
   final TextEditingController usernameController =
-      TextEditingController(text: "amir@gmail.com");
+      TextEditingController(text: "sobhan8@gmail.com");
   final TextEditingController passwordController =
-      TextEditingController(text: "1382");
+      TextEditingController(text: "2121");
   @override
   Widget build(BuildContext context) {
     final ThemeData themeData = Theme.of(context);
@@ -50,10 +50,27 @@ class _AuthScreenState extends State<AuthScreen> {
               final bloc = AuthBloc(authRepository);
               bloc.stream.forEach((state) {
                 if (state is AuthSuccess) {
-                  Navigator.of(context).pop();
+                  if (!state.isLoginMode) {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      const SnackBar(
+                        content:
+                            Text('ثبت‌نام با موفقیت انجام شد, لطفاورود کنید'),
+                        backgroundColor: Colors.green,
+                      ),
+                    );
+                  } else {
+                    Navigator.of(context).pop();
+                  }
                 } else if (state is AuthError) {
+                  final message = state.exception.message.contains('exists')
+                      ? 'ایمیل تکراری است'
+                      : state.exception.message;
                   ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text(state.exception.message)));
+                    SnackBar(
+                      content: Text(message),
+                      backgroundColor: Colors.red,
+                    ),
+                  );
                 }
               });
               bloc.add(AuthStarted());

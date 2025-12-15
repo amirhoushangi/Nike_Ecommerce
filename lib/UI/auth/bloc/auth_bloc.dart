@@ -27,7 +27,12 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           emit(AuthInitial(isLoginMode));
         }
       } catch (e) {
-        emit(AuthError(isLoginMode, AppException()));
+        if (e is AppException) {
+          emit(AuthError(isLoginMode, e));
+        } else {
+          emit(
+              AuthError(isLoginMode, AppException(message: 'خطای غیر منتظره')));
+        }
       }
     });
   }
