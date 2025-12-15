@@ -54,7 +54,7 @@ class _AuthScreenState extends State<AuthScreen> {
                     ScaffoldMessenger.of(context).showSnackBar(
                       const SnackBar(
                         content:
-                            Text('ثبت‌نام با موفقیت انجام شد, لطفاورود کنید'),
+                            Text('ثبت‌نام با موفقیت انجام شد, لطفا ورود کنید'),
                         backgroundColor: Colors.green,
                       ),
                     );
@@ -126,7 +126,8 @@ class _AuthScreenState extends State<AuthScreen> {
                       const SizedBox(height: 16),
                       ElevatedButton(
                         onPressed: () async {
-                          //await authRepository.login("amirh82@gmail.com", "13822831");
+                          // await authRepository.login(
+                          //     "amirh82@gmail.com", "13822831");
                           BlocProvider.of<AuthBloc>(context).add(
                               AuthButtonIsClicked(usernameController.text,
                                   passwordController.text));
