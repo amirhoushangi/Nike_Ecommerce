@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nike_ecommerce_flutter/UI/auth/auth.dart';
 import 'package:nike_ecommerce_flutter/UI/cart/bloc/cart_bloc.dart';
 import 'package:nike_ecommerce_flutter/UI/home/home.dart';
+import 'package:nike_ecommerce_flutter/UI/widgets/empty_state.dart';
 import 'package:nike_ecommerce_flutter/UI/widgets/image.dart';
 import 'package:nike_ecommerce_flutter/common/utils.dart';
 import 'package:nike_ecommerce_flutter/data/auth_info.dart';
@@ -41,6 +43,7 @@ class _CartScreenState extends State<CartScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        backgroundColor: const Color(0xffF5F5F5),
         appBar: AppBar(
           centerTitle: true,
           title: const Text("سبد خرید"),
@@ -167,22 +170,35 @@ class _CartScreenState extends State<CartScreen> {
                   itemCount: state.cartResponse.cartItems.length,
                 );
               } else if (state is CartAuthRequired) {
-                return SizedBox(
-                  width: MediaQuery.of(context).size.width,
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      const Text('وارد حساب کاربری خود شوید'),
-                      ElevatedButton(
-                          onPressed: () {
-                            Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => const AuthScreen()));
-                          },
-                          child: const Text('ورود')),
-                    ],
-                  ),
-                );
+                return EmptyView(
+                    message:
+                        'برای مشاهده سبد خرید ابتدا وارد حساب کاربری خود شوید',
+                    callToAction: ElevatedButton(
+                        style: ButtonStyle(
+                            shape: WidgetStatePropertyAll(
+                                RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(4))),
+                            foregroundColor:
+                                const WidgetStatePropertyAll(Colors.white),
+                            backgroundColor: const WidgetStatePropertyAll(
+                                LightThemeColors.primaryColor)),
+                        onPressed: () {
+                          Navigator.of(context).push(MaterialPageRoute(
+                              builder: (context) => const AuthScreen()));
+                        },
+                        child: const Text('ورود به حساب کاربری')),
+                    image: SvgPicture.asset(
+                      'assets/img/auth_required.svg',
+                      width: 140,
+                    ));
+              } else if (state is CartEmpty) {
+                return EmptyView(
+                    message:
+                        'تاکنون هیچ محصولی به سبد خرید خود اضافه نکرده‌اید',
+                    image: SvgPicture.asset(
+                      'assets/img/empty_cart.svg',
+                      width: 200,
+                    ));
               } else {
                 throw Exception('current cart state is not valid');
               }

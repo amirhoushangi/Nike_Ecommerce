@@ -13,7 +13,7 @@ class AuthScreen extends StatefulWidget {
 
 class _AuthScreenState extends State<AuthScreen> {
   final TextEditingController usernameController =
-      TextEditingController(text: "amirh82@gmail.com");
+      TextEditingController(text: "ali@gmail.com");
   final TextEditingController passwordController =
       TextEditingController(text: "13822831");
   @override

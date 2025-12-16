@@ -47,8 +47,8 @@ class MyApp extends StatelessWidget {
           onPrimary: Colors.white,
         ),
         appBarTheme: const AppBarTheme(
-          backgroundColor: LightThemeColors.primaryColor,
-          foregroundColor: Colors.white,
+          backgroundColor: Colors.white,
+          foregroundColor: LightThemeColors.primaryTextColor,
         ),
         textButtonTheme: TextButtonThemeData(
           style: ButtonStyle(
