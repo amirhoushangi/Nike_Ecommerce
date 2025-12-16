@@ -19,9 +19,23 @@ class CartScreen extends StatefulWidget {
 }
 
 class _CartScreenState extends State<CartScreen> {
+  CartBloc? cartBloc;
   @override
   void initState() {
     super.initState();
+    AuthRepository.authChangeNotifier.addListener(authCahngeNotifierListener);
+  }
+
+  void authCahngeNotifierListener() {
+    cartBloc?.add(CartAuthInfoChanged(AuthRepository.authChangeNotifier.value));
+  }
+
+  @override
+  void dispose() {
+    AuthRepository.authChangeNotifier
+        .removeListener(authCahngeNotifierListener);
+    cartBloc?.close();
+    super.dispose();
   }
 
   @override
@@ -34,7 +48,8 @@ class _CartScreenState extends State<CartScreen> {
         body: BlocProvider<CartBloc>(
           create: (context) {
             final bloc = CartBloc(cartRepository);
-            bloc.add(CartStarted());
+            cartBloc = bloc;
+            bloc.add(CartStarted(AuthRepository.authChangeNotifier.value));
             return bloc;
           },
           child: BlocBuilder<CartBloc, CartState>(
@@ -150,6 +165,23 @@ class _CartScreenState extends State<CartScreen> {
                     );
                   },
                   itemCount: state.cartResponse.cartItems.length,
+                );
+              } else if (state is CartAuthRequired) {
+                return SizedBox(
+                  width: MediaQuery.of(context).size.width,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      const Text('وارد حساب کاربری خود شوید'),
+                      ElevatedButton(
+                          onPressed: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => const AuthScreen()));
+                          },
+                          child: const Text('ورود')),
+                    ],
+                  ),
                 );
               } else {
                 throw Exception('current cart state is not valid');

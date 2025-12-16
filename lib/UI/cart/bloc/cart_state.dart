@@ -23,3 +23,7 @@ class CartError extends CartState {
 
   CartError(this.exception);
 }
+
+class CartAuthRequired extends CartState{
+  
+}
