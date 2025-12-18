@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -14,6 +16,7 @@ import 'package:nike_ecommerce_flutter/data/cart_item.dart';
 import 'package:nike_ecommerce_flutter/data/repo/auth_repository.dart';
 import 'package:nike_ecommerce_flutter/data/repo/cart_repository.dart';
 import 'package:nike_ecommerce_flutter/theme.dart';
+import 'package:pull_to_refresh/pull_to_refresh.dart';
 
 class CartScreen extends StatefulWidget {
   const CartScreen({super.key});
@@ -24,6 +27,8 @@ class CartScreen extends StatefulWidget {
 
 class _CartScreenState extends State<CartScreen> {
   CartBloc? cartBloc;
+  StreamSubscription? stateStreamSubscription;
+  final RefreshController _refreshController = RefreshController();
   @override
   void initState() {
     super.initState();
@@ -39,6 +44,7 @@ class _CartScreenState extends State<CartScreen> {
     AuthRepository.authChangeNotifier
         .removeListener(authCahngeNotifierListener);
     cartBloc?.close();
+    stateStreamSubscription?.cancel();
     super.dispose();
   }
 
@@ -53,6 +59,15 @@ class _CartScreenState extends State<CartScreen> {
         body: BlocProvider<CartBloc>(
           create: (context) {
             final bloc = CartBloc(cartRepository);
+            stateStreamSubscription = bloc.stream.listen((state) {
+              if (_refreshController.isRefresh) {
+                if (state is CartSuccess) {
+                  _refreshController.refreshCompleted();
+                } else if (state is CartError) {
+                  _refreshController.refreshFailed();
+                }
+              }
+            });
             cartBloc = bloc;
             bloc.add(CartStarted(AuthRepository.authChangeNotifier.value));
             return bloc;
@@ -68,17 +83,39 @@ class _CartScreenState extends State<CartScreen> {
                   child: Text(state.exception.message),
                 );
               } else if (state is CartSuccess) {
-                return ListView.builder(
-                  itemBuilder: (context, index) {
-                    final data = state.cartResponse.cartItems[index];
-                    return CartItem(
-                      data: data,
-                      onDeleteButtonClick: () {
-                        cartBloc?.add(CartDeleteButtonClicked(data.id));
-                      },
-                    );
+                return SmartRefresher(
+                  controller: _refreshController,
+                  header: const ClassicHeader(
+                    completeText: 'با موفقیت انجام شد',
+                    refreshingText: 'در حال به روزرسانی',
+                    idleText: 'برای به روزرسانی پایین بکشید',
+                    releaseText: 'رها کنید',
+                    failedText: 'خطای نامشخص',
+                    spacing: 2,
+                    completeIcon: Icon(
+                      CupertinoIcons.check_mark_circled,
+                      color: Colors.grey,
+                      size: 20,
+                    ),
+                  ),
+                  onRefresh: () {
+                    cartBloc?.add(CartStarted(
+                        AuthRepository.authChangeNotifier.value,
+                        isRefreshing: true));
                   },
-                  itemCount: state.cartResponse.cartItems.length,
+                  child: ListView.builder(
+                    physics: defaultScrollPhysics,
+                    itemBuilder: (context, index) {
+                      final data = state.cartResponse.cartItems[index];
+                      return CartItem(
+                        data: data,
+                        onDeleteButtonClick: () {
+                          cartBloc?.add(CartDeleteButtonClicked(data.id));
+                        },
+                      );
+                    },
+                    itemCount: state.cartResponse.cartItems.length,
+                  ),
                 );
               } else if (state is CartAuthRequired) {
                 return EmptyView(
