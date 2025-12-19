@@ -10,10 +10,14 @@ class CartItem extends StatelessWidget {
     super.key,
     required this.data,
     required this.onDeleteButtonClick,
+    required this.onIncreaseButtonClick,
+    required this.onDecreaseButtonClick,
   });
 
   final CartItemEntity data;
   final GestureTapCallback onDeleteButtonClick;
+  final GestureTapCallback onIncreaseButtonClick;
+  final GestureTapCallback onDecreaseButtonClick;
 
   @override
   Widget build(BuildContext context) {
@@ -66,15 +70,19 @@ class CartItem extends StatelessWidget {
                     Row(
                       children: [
                         IconButton(
-                          onPressed: () {},
+                          onPressed: onIncreaseButtonClick,
                           icon: const Icon(CupertinoIcons.plus_rectangle),
                         ),
-                        Text(
-                          data.count.toString(),
-                          style: Theme.of(context).textTheme.titleLarge,
-                        ),
+                        data.changeCountLoading
+                            ? CupertinoActivityIndicator(
+                                color: Theme.of(context).colorScheme.primary,
+                              )
+                            : Text(
+                                data.count.toString(),
+                                style: Theme.of(context).textTheme.titleLarge,
+                              ),
                         IconButton(
-                          onPressed: () {},
+                          onPressed: onDecreaseButtonClick,
                           icon: const Icon(CupertinoIcons.minus_rectangle),
                         ),
                       ],
@@ -87,6 +95,8 @@ class CartItem extends StatelessWidget {
                     Text(
                       data.product.previousPrice.withPriceLable,
                       style: const TextStyle(
+                        fontSize: 12,
+                        color: LightThemeColors.secondryTextColor,
                         decoration: TextDecoration.lineThrough,
                       ),
                     ),
