@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
+import 'package:nike_ecommerce_flutter/UI/cart/cart_item.dart';
 import 'package:nike_ecommerce_flutter/common/exeptions.dart';
 import 'package:nike_ecommerce_flutter/data/auth_info.dart';
 import 'package:nike_ecommerce_flutter/data/cart_response.dart';
@@ -41,7 +42,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
             if (successState.cartResponse.cartItems.isEmpty) {
               emit(CartEmpty());
             } else {
-              emit(CartSuccess(successState.cartResponse));
+              emit(calculatePriceInfo(successState.cartResponse));
             }
           }
         } catch (e) {
@@ -74,5 +75,24 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     } catch (e) {
       emit(CartError(AppException()));
     }
+  }
+
+  CartSuccess calculatePriceInfo(CartResponse cartResponse) {
+    int totalPrice = 0;
+    int payblePrice = 0;
+    int shippingCost = 0;
+
+    cartResponse.cartItems.forEach((CartItem) {
+      totalPrice += CartItem.product.previousPrice * CartItem.count;
+      payblePrice += CartItem.product.price * CartItem.count;
+    });
+
+    shippingCost = payblePrice >= 700000 ? 0 : 80000;
+
+    cartResponse.totalPrice = totalPrice;
+    cartResponse.payablePrice = payblePrice;
+    cartResponse.shippingCost = shippingCost;
+
+    return CartSuccess(cartResponse);
   }
 }

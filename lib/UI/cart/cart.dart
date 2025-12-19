@@ -7,6 +7,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:nike_ecommerce_flutter/UI/auth/auth.dart';
 import 'package:nike_ecommerce_flutter/UI/cart/bloc/cart_bloc.dart';
 import 'package:nike_ecommerce_flutter/UI/cart/cart_item.dart';
+import 'package:nike_ecommerce_flutter/UI/cart/price_info.dart';
 import 'package:nike_ecommerce_flutter/UI/home/home.dart';
 import 'package:nike_ecommerce_flutter/UI/widgets/empty_state.dart';
 import 'package:nike_ecommerce_flutter/UI/widgets/image.dart';
@@ -106,15 +107,23 @@ class _CartScreenState extends State<CartScreen> {
                   child: ListView.builder(
                     physics: defaultScrollPhysics,
                     itemBuilder: (context, index) {
-                      final data = state.cartResponse.cartItems[index];
-                      return CartItem(
-                        data: data,
-                        onDeleteButtonClick: () {
-                          cartBloc?.add(CartDeleteButtonClicked(data.id));
-                        },
-                      );
+                      if (index < state.cartResponse.cartItems.length) {
+                        final data = state.cartResponse.cartItems[index];
+                        return CartItem(
+                          data: data,
+                          onDeleteButtonClick: () {
+                            cartBloc?.add(CartDeleteButtonClicked(data.id));
+                          },
+                        );
+                      } else {
+                        return PriceInfo(
+                          payblePrice: state.cartResponse.payablePrice,
+                          totalPrice: state.cartResponse.totalPrice,
+                          shippinCost: state.cartResponse.shippingCost,
+                        );
+                      }
                     },
-                    itemCount: state.cartResponse.cartItems.length,
+                    itemCount: state.cartResponse.cartItems.length + 1,
                   ),
                 );
               } else if (state is CartAuthRequired) {
