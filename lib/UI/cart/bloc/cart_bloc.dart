@@ -100,7 +100,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
       if (!isRefreshing) {
         emit(CartLoading());
       }
-      await Future.delayed(Duration(microseconds: 2000));
+      await Future.delayed(const Duration(microseconds: 2000));
       final result = await cartRepository.getAll();
       if (result.cartItems.isEmpty) {
         emit(CartEmpty());

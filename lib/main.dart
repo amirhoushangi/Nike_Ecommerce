@@ -34,6 +34,13 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
         useMaterial3: true,
+        hintColor: LightThemeColors.secondryTextColor,
+        inputDecorationTheme: InputDecorationTheme(
+            border: OutlineInputBorder(),
+            enabledBorder: OutlineInputBorder(
+                borderSide: BorderSide(
+                    color:
+                        LightThemeColors.primaryTextColor.withOpacity(0.1)))),
         textTheme: TextTheme(
             titleSmall: defultTextStyle.apply(
                 color: LightThemeColors.secondryTextColor),
