@@ -60,6 +60,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               width: MediaQuery.of(context).size.width - 48,
               child: BlocBuilder<ProductBloc, ProductState>(
                 builder: (context, state) => FloatingActionButton.extended(
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
                   onPressed: () {
                     BlocProvider.of<ProductBloc>(context)
                         .add(CartAddButtonClick(widget.product.id));
