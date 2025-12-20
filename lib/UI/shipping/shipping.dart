@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nike_ecommerce_flutter/UI/cart/price_info.dart';
+import 'package:nike_ecommerce_flutter/UI/receipt/payment_receipt.dart';
 import 'package:nike_ecommerce_flutter/theme.dart';
 
 class ShippingScreen extends StatelessWidget {
@@ -26,7 +27,17 @@ class ShippingScreen extends StatelessWidget {
           children: [
             const TextField(
               decoration: InputDecoration(
-                  label: Text('نام و نام خانوادگی'),
+                  label: Text('نام'),
+                  labelStyle:
+                      TextStyle(color: LightThemeColors.secondryTextColor),
+                  floatingLabelStyle: TextStyle(color: Colors.blue),
+                  focusedBorder: OutlineInputBorder(
+                      borderSide: BorderSide(color: Colors.blue))),
+            ),
+            const SizedBox(height: 12),
+            const TextField(
+              decoration: InputDecoration(
+                  label: Text('نام خانوادگی'),
                   labelStyle:
                       TextStyle(color: LightThemeColors.secondryTextColor),
                   floatingLabelStyle: TextStyle(color: Colors.blue),
@@ -72,12 +83,15 @@ class ShippingScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 OutlinedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => PaymentReceiptScreen()));
+                    },
                     style: OutlinedButton.styleFrom(
-                        side: BorderSide(
-                          color: const Color.fromARGB(255, 8, 92, 229),
+                        side: const BorderSide(
+                          color: LightThemeColors.primaryColor,
                         ),
-                        foregroundColor: const Color.fromARGB(255, 8, 92, 229),
+                        foregroundColor: LightThemeColors.primaryColor,
                         shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(4))),
                     child: const Text("پرداخت در محل")),
@@ -85,7 +99,7 @@ class ShippingScreen extends StatelessWidget {
                 ElevatedButton(
                   onPressed: () {},
                   style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color.fromARGB(255, 8, 92, 229),
+                      backgroundColor: LightThemeColors.primaryColor,
                       foregroundColor: Colors.white,
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(4))),
