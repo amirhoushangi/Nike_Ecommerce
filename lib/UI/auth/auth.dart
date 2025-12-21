@@ -14,9 +14,9 @@ class AuthScreen extends StatefulWidget {
 
 class _AuthScreenState extends State<AuthScreen> {
   final TextEditingController usernameController =
-      TextEditingController(text: "amir82@gmail.com");
+      TextEditingController(text: "sobhan82@gmail.com");
   final TextEditingController passwordController =
-      TextEditingController(text: "13822831");
+      TextEditingController(text: "2121");
   @override
   Widget build(BuildContext context) {
     final ThemeData themeData = Theme.of(context);
