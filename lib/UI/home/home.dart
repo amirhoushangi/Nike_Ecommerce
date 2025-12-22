@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:nike_ecommerce_flutter/UI/List/list.dart';
 import 'package:nike_ecommerce_flutter/UI/home/bloc/home_bloc.dart';
 import 'package:nike_ecommerce_flutter/UI/product/product.dart';
 import 'package:nike_ecommerce_flutter/UI/widgets/error.dart';
@@ -48,13 +49,21 @@ class HomeScreen extends StatelessWidget {
                       case 3:
                         return _HorizontalProductList(
                           title: 'جدیدترین',
-                          onTap: () {},
+                          onTap: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => const ProductListScreen(
+                                    sort: ProductSort.latest)));
+                          },
                           products: state.latestProducts,
                         );
                       case 4:
                         return _HorizontalProductList(
                             title: 'پربازدیدترین',
-                            onTap: () {},
+                            onTap: () {
+                              Navigator.of(context).push(MaterialPageRoute(
+                                  builder: (context) => const ProductListScreen(
+                                      sort: ProductSort.popular)));
+                            },
                             products: state.popularProducts);
                       default:
                         return Container();
