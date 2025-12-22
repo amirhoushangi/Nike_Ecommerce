@@ -24,10 +24,10 @@ class ProductRemotDataSource
       case ProductSort.popular:
         query = '?_sort=discount&_order=desc';
         break;
-      case ProductSort.priceHighToLow:
+      case ProductSort.priceLowToHigh:
         query = '?_sort=price&_order=asc';
         break;
-      case ProductSort.priceLowToHigh:
+      case ProductSort.priceHighToLow:
         query = '?_sort=price&_order=desc';
         break;
     }

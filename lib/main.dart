@@ -50,7 +50,7 @@ class MyApp extends StatelessWidget {
             titleLarge: defultTextStyle.copyWith(
                 fontWeight: FontWeight.bold, fontSize: 18)),
         colorScheme: const ColorScheme.light(
-          primary: LightThemeColors.secondaryColor,
+          primary: LightThemeColors.primaryColor,
           onPrimary: Colors.white,
         ),
         appBarTheme: const AppBarTheme(
