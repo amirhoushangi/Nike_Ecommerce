@@ -4,6 +4,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nike_ecommerce_flutter/UI/cart/price_info.dart';
+import 'package:nike_ecommerce_flutter/UI/payment_webview.dart';
 import 'package:nike_ecommerce_flutter/UI/receipt/payment_receipt.dart';
 import 'package:nike_ecommerce_flutter/UI/shipping/bloc/shipping_bloc.dart';
 import 'package:nike_ecommerce_flutter/data/order.dart';
@@ -65,11 +66,20 @@ class _ShippingScreenState extends State<ShippingScreen> {
               ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(content: Text(event.appException.message)));
             } else if (event is ShippingSuccess) {
-              CartRepository.cartItemCountNotifier.value = 0;
-              Navigator.of(context).push(MaterialPageRoute(
-                  builder: (context) => PaymentReceiptScreen(
-                        orderId: event.data.orderId,
-                      )));
+              if (event.data.bankGatewayUrl.isNotEmpty) {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => PaymentGatewayScreen(
+                              bankGatewayUrl: event.data.bankGatewayUrl,
+                            )));
+              } else {
+                CartRepository.cartItemCountNotifier.value = 0;
+                Navigator.of(context).push(MaterialPageRoute(
+                    builder: (context) => PaymentReceiptScreen(
+                          orderId: event.data.orderId,
+                        )));
+              }
             }
           });
           return bloc;
@@ -170,7 +180,16 @@ class _ShippingScreenState extends State<ShippingScreen> {
                                 child: const Text("پرداخت در محل")),
                             const SizedBox(width: 16),
                             ElevatedButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                BlocProvider.of<ShippingBloc>(context).add(
+                                    ShippingCreateOrder(SubmitOrderParams(
+                                        firstNameController.text,
+                                        lastNameController.text,
+                                        phoneNumberController.text,
+                                        postalCodeController.text,
+                                        addressController.text,
+                                        PaymentMethod.online)));
+                              },
                               style: ElevatedButton.styleFrom(
                                   backgroundColor:
                                       LightThemeColors.primaryColor,
