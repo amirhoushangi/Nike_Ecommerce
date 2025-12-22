@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nike_ecommerce_flutter/UI/cart/cart.dart';
 import 'package:nike_ecommerce_flutter/UI/home/home.dart';
+import 'package:nike_ecommerce_flutter/UI/profile/profile_screen.dart';
 import 'package:nike_ecommerce_flutter/UI/widgets/badge.dart';
 import 'package:nike_ecommerce_flutter/data/repo/auth_repository.dart';
 import 'package:nike_ecommerce_flutter/data/repo/cart_repository.dart';
@@ -59,20 +60,10 @@ class _RootScreenState extends State<RootScreen> {
               _navigator(_homekey, homeIndex, const HomeScreen()),
               _navigator(_cartkey, cartIndex, const CartScreen()),
               _navigator(
-                  _profilekey,
-                  profileIndex,
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text('Profile'),
-                      ElevatedButton(
-                          onPressed: () {
-                            authRepository.signOut();
-                            CartRepository.cartItemCountNotifier.value = 0;
-                          },
-                          child: Text('SingOut')),
-                    ],
-                  )),
+                _profilekey,
+                profileIndex,
+                ProfileScreen(),
+              )
             ],
           ),
           bottomNavigationBar: BottomNavigationBar(

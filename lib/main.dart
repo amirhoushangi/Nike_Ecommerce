@@ -34,6 +34,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter Demo',
       theme: ThemeData(
         useMaterial3: true,
+        dividerColor: LightThemeColors.secondryTextColor,
         hintColor: LightThemeColors.secondryTextColor,
         inputDecorationTheme: InputDecorationTheme(
             border: OutlineInputBorder(),

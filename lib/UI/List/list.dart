@@ -16,8 +16,11 @@ class ProductListScreen extends StatefulWidget {
   State<ProductListScreen> createState() => _ProductListScreenState();
 }
 
+enum ViewType { grid, list }
+
 class _ProductListScreenState extends State<ProductListScreen> {
   ProductListBloc? bloc;
+  ViewType viewType = ViewType.grid;
 
   @override
   void dispose() {
@@ -29,7 +32,7 @@ class _ProductListScreenState extends State<ProductListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text('کفش های ورزشی'),
+          title: const Text('کفش های ورزشی'),
         ),
         body: BlocProvider<ProductListBloc>(
           create: (context) {
@@ -67,7 +70,8 @@ class _ProductListScreenState extends State<ProductListScreen> {
                               return SizedBox(
                                 height: 250,
                                 child: Padding(
-                                  padding: EdgeInsets.only(top: 24, bottom: 24),
+                                  padding: const EdgeInsets.only(
+                                      top: 24, bottom: 24),
                                   child: Column(
                                     children: [
                                       Text(
@@ -98,7 +102,8 @@ class _ProductListScreenState extends State<ProductListScreen> {
                                                       children: [
                                                         Text(state
                                                             .sortNames[index]),
-                                                        SizedBox(width: 8),
+                                                        const SizedBox(
+                                                            width: 8),
                                                         if (index ==
                                                             selectedSortIndex)
                                                           Icon(
@@ -160,8 +165,16 @@ class _ProductListScreenState extends State<ProductListScreen> {
                           Padding(
                             padding: const EdgeInsets.only(right: 8, left: 8),
                             child: IconButton(
-                              onPressed: () {},
-                              icon: const Icon(CupertinoIcons.square_grid_2x2),
+                              onPressed: () {
+                                setState(() {
+                                  viewType = viewType == ViewType.grid
+                                      ? ViewType.list
+                                      : ViewType.grid;
+                                });
+                              },
+                              icon: Icon(viewType == ViewType.grid
+                                  ? CupertinoIcons.square_grid_2x2
+                                  : CupertinoIcons.square),
                             ),
                           ),
                         ],
@@ -171,10 +184,9 @@ class _ProductListScreenState extends State<ProductListScreen> {
                   Expanded(
                     child: GridView.builder(
                       physics: defaultScrollPhysics,
-                      gridDelegate:
-                          const SliverGridDelegateWithFixedCrossAxisCount(
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                         childAspectRatio: 0.65,
-                        crossAxisCount: 2,
+                        crossAxisCount: viewType == ViewType.grid ? 2 : 1,
                       ),
                       itemCount: products.length,
                       itemBuilder: (BuildContext context, int index) {
