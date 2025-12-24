@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:nike_ecommerce_flutter/data/common/http_response_validator.dart';
-import 'package:nike_ecommerce_flutter/data/product.dart';
+import 'package:nike_ecommerce_flutter/data/products.dart';
 
 abstract class IProductDataSource {
   Future<List<ProductEntity>> getAll(int sort);

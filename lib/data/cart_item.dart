@@ -1,4 +1,4 @@
-import 'package:nike_ecommerce_flutter/data/product.dart';
+import 'package:nike_ecommerce_flutter/data/products.dart';
 
 class CartItemEntity {
   final ProductEntity product;

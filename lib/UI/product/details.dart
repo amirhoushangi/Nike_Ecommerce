@@ -7,7 +7,7 @@ import 'package:nike_ecommerce_flutter/UI/product/bloc/product_bloc.dart';
 import 'package:nike_ecommerce_flutter/UI/product/comment/comment_list.dart';
 import 'package:nike_ecommerce_flutter/UI/widgets/image.dart';
 import 'package:nike_ecommerce_flutter/common/utils.dart';
-import 'package:nike_ecommerce_flutter/data/product.dart';
+import 'package:nike_ecommerce_flutter/data/products.dart';
 import 'package:nike_ecommerce_flutter/data/repo/cart_repository.dart';
 import 'package:nike_ecommerce_flutter/theme.dart';
 
@@ -60,7 +60,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
               width: MediaQuery.of(context).size.width - 48,
               child: BlocBuilder<ProductBloc, ProductState>(
                 builder: (context, state) => FloatingActionButton.extended(
-                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(30)),
                   onPressed: () {
                     BlocProvider.of<ProductBloc>(context)
                         .add(CartAddButtonClick(widget.product.id));

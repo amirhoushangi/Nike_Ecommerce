@@ -2,7 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:nike_ecommerce_flutter/common/exeptions.dart';
 import 'package:nike_ecommerce_flutter/data/banner.dart';
-import 'package:nike_ecommerce_flutter/data/product.dart';
+import 'package:nike_ecommerce_flutter/data/products.dart';
 import 'package:nike_ecommerce_flutter/data/repo/banner_repository.dart';
 import 'package:nike_ecommerce_flutter/data/repo/product_repository.dart';
 

@@ -8,6 +8,7 @@ import 'package:nike_ecommerce_flutter/common/exeptions.dart';
 import 'package:nike_ecommerce_flutter/data/auth_info.dart';
 import 'package:nike_ecommerce_flutter/data/cart_response.dart';
 import 'package:nike_ecommerce_flutter/data/repo/cart_repository.dart';
+import 'package:nike_ecommerce_flutter/data/repo/product_repository.dart';
 
 part 'cart_event.dart';
 part 'cart_state.dart';

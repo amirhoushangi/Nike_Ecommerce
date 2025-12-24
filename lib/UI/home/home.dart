@@ -6,7 +6,7 @@ import 'package:nike_ecommerce_flutter/UI/product/product.dart';
 import 'package:nike_ecommerce_flutter/UI/widgets/error.dart';
 import 'package:nike_ecommerce_flutter/UI/widgets/slider.dart';
 import 'package:nike_ecommerce_flutter/common/utils.dart';
-import 'package:nike_ecommerce_flutter/data/product.dart';
+import 'package:nike_ecommerce_flutter/data/products.dart';
 import 'package:nike_ecommerce_flutter/data/repo/banner_repository.dart';
 import 'package:nike_ecommerce_flutter/data/repo/product_repository.dart';
 

@@ -1,5 +1,5 @@
 import 'package:nike_ecommerce_flutter/common/http_Client.dart';
-import 'package:nike_ecommerce_flutter/data/product.dart';
+import 'package:nike_ecommerce_flutter/data/products.dart';
 import 'package:nike_ecommerce_flutter/data/source/product_data_source.dart';
 
 final productRepository = ProductRepository(

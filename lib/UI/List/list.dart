@@ -4,7 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nike_ecommerce_flutter/UI/List/bloc/product_list_bloc.dart';
 import 'package:nike_ecommerce_flutter/UI/product/product.dart';
 import 'package:nike_ecommerce_flutter/common/utils.dart';
-import 'package:nike_ecommerce_flutter/data/product.dart';
+import 'package:nike_ecommerce_flutter/data/products.dart';
 import 'package:nike_ecommerce_flutter/data/repo/product_repository.dart';
 
 class ProductListScreen extends StatefulWidget {
