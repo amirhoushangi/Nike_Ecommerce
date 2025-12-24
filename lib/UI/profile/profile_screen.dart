@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:nike_ecommerce_flutter/UI/auth/auth.dart';
 import 'package:nike_ecommerce_flutter/UI/favorites/favorite_screen.dart';
+import 'package:nike_ecommerce_flutter/UI/order/order_history_screen.dart';
 import 'package:nike_ecommerce_flutter/data/auth_info.dart';
 import 'package:nike_ecommerce_flutter/data/repo/auth_repository.dart';
 import 'package:nike_ecommerce_flutter/data/repo/cart_repository.dart';
@@ -72,7 +73,10 @@ class ProfileScreen extends StatelessWidget {
                     height: 1,
                   ),
                   InkWell(
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.of(context).push(MaterialPageRoute(
+                          builder: (context) => const OrderHistoryScreen()));
+                    },
                     child: Container(
                       padding: const EdgeInsets.fromLTRB(16, 0, 16, 0),
                       height: 56,

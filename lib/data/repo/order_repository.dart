@@ -19,4 +19,9 @@ class OrderRepository implements IOrderRepository {
   @override
   Future<PaymentReceiptData> getPaymentReceipt(int orderId) =>
       orderDataSource.getPaymentReceipt(orderId);
+
+  @override
+  Future<List<OrderEntity>> getOrders() {
+    return orderDataSource.getOrders();
+  }
 }
