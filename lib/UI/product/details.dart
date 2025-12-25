@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:nike_ecommerce_flutter/UI/product/bloc/product_bloc.dart';
 import 'package:nike_ecommerce_flutter/UI/product/comment/comment_list.dart';
+import 'package:nike_ecommerce_flutter/UI/product/comment/insert/insert_comment_dialog.dart';
 import 'package:nike_ecommerce_flutter/UI/widgets/image.dart';
 import 'package:nike_ecommerce_flutter/common/utils.dart';
 import 'package:nike_ecommerce_flutter/data/products.dart';
@@ -67,7 +68,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         .add(CartAddButtonClick(widget.product.id));
                   },
                   label: state is productAddToCartButtonLoading
-                      ? CupertinoActivityIndicator()
+                      ? const CupertinoActivityIndicator()
                       : const Text('افزودن به سبد خرید'),
                 ),
               ),
@@ -82,7 +83,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   foregroundColor: LightThemeColors.primaryTextColor,
                   actions: [
                     IconButton(
-                        onPressed: () {}, icon: Icon(CupertinoIcons.heart))
+                        onPressed: () {},
+                        icon: const Icon(CupertinoIcons.heart))
                   ],
                 ),
                 SliverToBoxAdapter(
@@ -127,7 +129,19 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                               style: Theme.of(context).textTheme.titleSmall,
                             ),
                             TextButton(
-                                onPressed: () {}, child: Text('ثبت نظر')),
+                                onPressed: () {
+                                  showModalBottomSheet(
+                                      useRootNavigator: true,
+                                      context: context,
+                                      builder: (context) {
+                                        return InsertCommentDialog(
+                                          productId: widget.product.id,
+                                          scaffoldMessager:
+                                              _scaffoldkey.currentState,
+                                        );
+                                      });
+                                },
+                                child: const Text('ثبت نظر')),
                           ],
                         ),
                       ],
